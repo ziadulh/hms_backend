@@ -1,0 +1,16 @@
+{
+  "name": "hms_backend",
+  "version": "1.0.0",
+  "description": "This project is abount hostel management.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "hostel",
+    "management",
+    "system"
+  ],
+  "author": "ziadul",
+  "license": "ISC"
+}

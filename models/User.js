@@ -16,16 +16,16 @@ User.init({
         type: DataTypes.STRING(50),
         allowNull: false
     },
+    role: {
+        type: DataTypes.STRING(10),
+        allowNull: false
+    },
     email: {
         type: DataTypes.STRING(50),
         allowNull: false
     },
     password: {
-        type: DataTypes.STRING(250),
-        allowNull: false
-    },
-    role: {
-        type: DataTypes.STRING(10),
+        type: DataTypes.STRING(150),
         allowNull: false
     },
     createdBy: {

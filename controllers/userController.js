@@ -3,6 +3,8 @@ const bcrypt = require('bcryptjs');
 const { validationResult } = require('express-validator');
 
 const myController = {
+
+    // create a user 
     create: async (req, res) => {
         // return res.status(200).json({ status: req.user });
         const errors = validationResult(req);
@@ -24,10 +26,22 @@ const myController = {
             return res.status(400).json({ status: false, errors: [{ msg: "Oops! Something Went Wrong." }], error });
         }
     },
+
+    // get a user info by id
     show: async (req, res) => {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ status: false, errors: errors.array() });
+        // return res.status(200).json({ status: req.params.id });
+        try {
+            const user = await User.findByPk(req.params.id, {
+                attributes: { exclude: ['password'] }
+              });
+            if(user.createdBy == req.user.id || req.user.role == 'super' || req.user.role == 'admin' ){
+                return res.status(200).json({ status: true, errors: [{ msg: "User Successfully Retrived" }], user });
+            }else{
+                return res.status(401).json({ status: false, errors: [{ msg: "You are not authorized!" }], user: req.user })
+            }
+    
+        } catch (error) {
+            return res.status(400).json({ status: false, errors: [{ msg: "Oops! Something Went Wrong." }], error });
         }
     }
 }

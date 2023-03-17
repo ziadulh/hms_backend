@@ -29,6 +29,7 @@ const createValidation = [
 
 // router section
 router.post('/create', createValidation, authUser, userController.create);
+router.post('/:id', createValidation, authUser, userController.show);
 
 
 // router.get('/', function (req, res, next) {

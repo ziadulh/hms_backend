@@ -14,6 +14,10 @@ const loginValidation = [
 
 
 // router section
+
+// login
 router.post('/login', loginValidation, authenticationController.login);
+// logout
+router.post('/logout', authenticationController.logout);
 
 module.exports = router;

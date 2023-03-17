@@ -26,8 +26,10 @@ User.init({
     },
     password: {
         type: DataTypes.STRING(150),
-        allowNull: false
+        allowNull: false,
+        // exclude: true
     },
+    tokens: [{type: Object}],
     createdBy: {
         type: DataTypes.BIGINT(20),
         allowNull: false

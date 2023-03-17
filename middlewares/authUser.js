@@ -4,7 +4,7 @@ const JWT_SECRET = process.env.JWT_SECRET;
 const authUser = (req, res, next) => {
     const token = req.header('auth_token');
     if(!token){
-        return res.status(401).send({error: "Please login first"});
+        return res.status(401).send({ status: false, errors: [{ msg: "Please login first" }] });
     }
 
     try {
@@ -12,7 +12,7 @@ const authUser = (req, res, next) => {
         req.user = data.user;
         next();
     } catch (error) {
-        return res.status(401).send({error: "Please login first"});
+        return res.status(401).send({ status: false, errors: [{ msg: "Please login first" }], error });
     }
 }
 

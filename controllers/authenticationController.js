@@ -72,9 +72,9 @@ const authenticationController = {
                 let tokenExist = false;
                 // let newToken = oldTokens.filter(t => t.authToken !== token);
                 let newToken = oldTokens.filter((t) => {
-                    if(t.authToken !== token){
+                    if (t.authToken !== token) {
                         return t;
-                    }else{
+                    } else {
                         tokenExist = true;
                     }
                 });
@@ -90,7 +90,7 @@ const authenticationController = {
                     }
                 });
             }
-            return res.status(200).json({ status: true, success: [{ msg: "Logout Successful" }],  name: user.name});
+            return res.status(200).json({ status: true, success: [{ msg: "Logout Successful" }], name: user.name });
         } catch (error) {
             return res.status(400).json({ status: false, errors: [{ msg: "Oops! Something Went Wrong." }], error });
         }

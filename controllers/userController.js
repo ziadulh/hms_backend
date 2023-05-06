@@ -6,8 +6,11 @@ const myController = {
 
     // get all user
     index: async (req, res) => {
+        let offset = parseInt(req.query.page) || 0;
+        let limit = parseInt(req.query.limit) || 1;
+        // return res.status(200).json({offset, limit});
         try {
-            const users = await User.findAll({ attributes: { exclude: ['password', 'tokens'] } });
+            const users = await User.findAll({ attributes: { exclude: ['password', 'tokens']}, offset: offset, limit: limit });
             return res.status(200).json({ status: true, success: [{ msg: "All user info retrived" }], users });
         } catch (error) {
             return res.status(400).json({ status: false, errors: [{ msg: "Oops! Something Went Wrong" }], error });

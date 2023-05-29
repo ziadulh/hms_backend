@@ -10,6 +10,7 @@ require('dotenv').config();
 // app.use('/user', require('./routes/user.js'));
 app.use('/api/users', require('./routes/user'));
 app.use('/api/authentication', require('./routes/authentication'));
+app.use('/api/meals', require('./routes/meal'));
 
 // respond with "hello world" when a GET request is made to the homepage
 // app.get('/', (req, res) => {

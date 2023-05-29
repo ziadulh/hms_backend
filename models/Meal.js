@@ -1,11 +1,11 @@
 const sequelize = require('../db')
 const { Model, DataTypes } = require('sequelize');
-const Meal = require('./Meal');
+const User = require('./User');
 
-class User extends Model { }
+class Meal extends Model { }
 
 
-User.init({
+Meal.init({
     id: {
         type: DataTypes.BIGINT(20),
         autoIncrement: true,
@@ -13,24 +13,22 @@ User.init({
         unique: true,
         allowNull: false
     },
-    name: {
-        type: DataTypes.STRING(50),
+    type: {
+        type: DataTypes.ENUM('B', 'L', 'D'),
         allowNull: false
     },
-    role: {
-        type: DataTypes.STRING(10),
+    Year: {
+        type: DataTypes.INTEGER(4),
         allowNull: false
     },
-    email: {
-        type: DataTypes.STRING(50),
+    Month: {
+        type: DataTypes.STRING(2),
         allowNull: false
     },
-    password: {
-        type: DataTypes.STRING(150),
+    date: {
+        type: DataTypes.DATEONLY(),
         allowNull: false,
-        // exclude: true
     },
-    tokens: [{type: Object}],
     createdBy: {
         type: DataTypes.BIGINT(20),
         allowNull: false
@@ -41,9 +39,9 @@ User.init({
     }
 }, {
     sequelize,
-    modelName: 'user'
+    modelName: 'meal'
 });
 
-// User.hasMany(Meal, { foreignKey: 'id' });
+// Meal.belongsTo(User, { foreignKey: 'user_id' });
 
-module.exports = User;
+module.exports = Meal;

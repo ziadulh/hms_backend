@@ -10,27 +10,73 @@ const myController = {
     index: async (req, res) => {
         try {
             let consumer = parseInt(req.query.consumer) || null;
-            // let month = parseInt(req.query.month) || null;
-            // let year = parseInt(req.query.year) || null;
-            const meals = await Meal.findAll({
+            let month = parseInt(req.query.month) || null;
+            let year = parseInt(req.query.year) || null;
+            // let month = 5;
+            // let year = 2024;
+            // res.send({consumer, year, month});
+            let meals = await Meal.findAll({
                 where: {
-                    [Op.and]: literal(`CASE WHEN :consumer IS NULL THEN TRUE ELSE userId = :consumer END`),
+                    [Op.and]: [literal(`CASE WHEN :consumer IS NULL THEN TRUE ELSE userId = :consumer END`), literal(`CASE WHEN :month IS NULL THEN TRUE ELSE month = :month END`), literal(`CASE WHEN :year IS NULL THEN TRUE ELSE year = :year END`)],
                 },
-                replacements: { consumer },
+                replacements: { consumer, month, year },
                 include: [{
                     model: User,
-                    attributes: { exclude: ['password', 'tokens']} // Specify the attributes you want to select from the associated Project model
-                }]
+                    attributes: { exclude: ['password', 'tokens'] } // Specify the attributes you want to select from the associated Project model
+                }],
+                order: [
+                    ['date', 'DESC'],
+                ]
             });
+            // Key by a specific column
+            meals = meals.reduce((acc, row) => {
+                // acc[row.date][row.type] = row;
+                acc[row.date + '_' + row.type] = row;
+                return acc;
+            }, {});
+
+
             return res.status(200).json({ status: true, success: [{ msg: "All meals info retrived" }], meals });
         } catch (error) {
-            console.log(error);
+            // return res.send(error);
+            // console.log(error);
             return res.status(400).json({ status: false, errors: [{ msg: "Oops! Something Went Wrong" }], error });
         }
     },
 
-    // // create a user 
-    // create: async (req, res) => {
+    // create a user 
+    create: async (req, res) => {
+        Object.entries(req.body).forEach(async ([key, value]) => {
+            let dt_and_type = key.split("_");
+            let dt = dt_and_type[0];
+            let type = dt_and_type[1];
+            let meal = await Meal.findOne({ where: { 'date': dt, 'type': type } });
+            if (meal !== null) {
+                meal.userId = 25;
+                meal.type = type;
+                meal.count = value;
+                meal.year = '2023';
+                meal.month = '7',
+                meal.date = dt;
+                meal.createdBy = 1;
+                await meal.save();
+            } 
+            else {
+                await Meal.create({
+                    userId: 25,
+                    type: type,
+                    count: value,
+                    year: 2023,
+                    month: 7,
+                    date: dt,
+                    createdBy: 1
+                })
+            }
+            
+        });
+        // console.log(req.body);
+        // return res.status(200).json(req);
+    }
 
     //     // checking validation at route file and returns validaiton error msg
     //     const errors = validationResult(req);

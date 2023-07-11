@@ -11,6 +11,7 @@ require('dotenv').config();
 app.use('/api/users', require('./routes/user'));
 app.use('/api/authentication', require('./routes/authentication'));
 app.use('/api/meals', require('./routes/meal'));
+app.use('/api/expenditure', require('./routes/expenditure'));
 
 // respond with "hello world" when a GET request is made to the homepage
 // app.get('/', (req, res) => {

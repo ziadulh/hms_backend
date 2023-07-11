@@ -17,11 +17,15 @@ Meal.init({
         type: DataTypes.ENUM('B', 'L', 'D'),
         allowNull: false
     },
-    Year: {
+    count: {
+        type: DataTypes.DOUBLE,
+        allowNull: false
+    },
+    year: {
         type: DataTypes.INTEGER(4),
         allowNull: false
     },
-    Month: {
+    month: {
         type: DataTypes.STRING(2),
         allowNull: false
     },

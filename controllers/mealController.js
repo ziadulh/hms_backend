@@ -46,13 +46,14 @@ const myController = {
 
     // create a user 
     create: async (req, res) => {
-        Object.entries(req.body).forEach(async ([key, value]) => {
+        let consumerId = req.body.consumer;
+        Object.entries(req.body.userMeals).forEach(async ([key, value]) => {
             let dt_and_type = key.split("_");
             let dt = dt_and_type[0];
             let type = dt_and_type[1];
-            let meal = await Meal.findOne({ where: { 'date': dt, 'type': type } });
+            let meal = await Meal.findOne({ where: {'userId': consumerId, 'date': dt, 'type': type } });
             if (meal !== null) {
-                meal.userId = 25;
+                // meal.userId = consumerId;
                 meal.type = type;
                 meal.count = value;
                 meal.year = '2023';
@@ -63,7 +64,7 @@ const myController = {
             } 
             else {
                 await Meal.create({
-                    userId: 25,
+                    userId: consumerId,
                     type: type,
                     count: value,
                     year: 2023,

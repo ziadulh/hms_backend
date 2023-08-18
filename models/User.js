@@ -44,6 +44,7 @@ User.init({
     modelName: 'user'
 });
 
-// User.hasMany(Meal, { foreignKey: 'id' });
+User.hasMany(Meal, { foreignKey: 'userId' });
+Meal.belongsTo(User, { foreignKey: 'id' });
 
 module.exports = User;

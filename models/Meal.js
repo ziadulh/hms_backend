@@ -46,6 +46,6 @@ Meal.init({
     modelName: 'meal'
 });
 
-// Meal.belongsTo(User, { foreignKey: 'user_id' });
+// Meal.belongsTo(User, { foreignKey: 'id' });
 
 module.exports = Meal;

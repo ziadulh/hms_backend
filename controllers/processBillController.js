@@ -1,6 +1,7 @@
 const { Op, literal } = require('sequelize');
 const Meal = require("../models/Meal");
 const User = require("../models/User");
+const Expenditure = require('../models/Expenditure');
 
 const processBillController = {
 
@@ -31,6 +32,18 @@ const processBillController = {
             return res.status(400).json({ status: false, errors: [{ msg: "Oops! Something Went Wrong" }], error });
         }
     },
+
+    getExpenditureHead: async (req, res) => {
+        const expenditures = await Expenditure.findAll({
+            where: { status: 'active' } 
+        });
+        // console.log(expenditures);
+        return res.status(200).json({ status: true, success: [{ msg: "All expenditures info retrived" }], expenditures });
+    },
+
+    ProcessMonthlyData: async (req, res) => {
+        return res.status(200).json({ status: true, success: "success" });
+    }
 
 }
 

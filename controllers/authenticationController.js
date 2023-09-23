@@ -30,7 +30,7 @@ const authenticationController = {
                     role: user.role
                 }
             };
-            const authToken = jwt.sign(data, JWT_SECRET, { expiresIn: 60 * 60 });
+            const authToken = jwt.sign(data, JWT_SECRET, { expiresIn: 30 * 60 * 60}); //expire time in second
 
             // Storing token to databse
             let oldTokens = user.tokens || [];

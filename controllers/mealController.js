@@ -55,7 +55,7 @@ const myController = {
             if (meal !== null) {
                 // meal.userId = consumerId;
                 meal.type = type;
-                meal.count = value;
+                meal.count = value == '' ? 0.00 : value;
                 meal.year = '2023';
                 meal.month = '7',
                 meal.date = dt;
@@ -66,7 +66,7 @@ const myController = {
                 await Meal.create({
                     userId: consumerId,
                     type: type,
-                    count: value,
+                    count: value == '' ? 0.00 : value,
                     year: 2023,
                     month: 7,
                     date: dt,

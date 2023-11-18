@@ -1,7 +1,9 @@
-const { Op, literal } = require('sequelize');
+const { Op, literal, NOW } = require('sequelize');
 const Meal = require("../models/Meal");
 const User = require("../models/User");
 const Expenditure = require('../models/Expenditure');
+const MonthlyCost = require('../models/MonthlyCost');
+const MonthlyCostDetails = require('../models/MonthlyCostDetails');
 
 const processBillController = {
 
@@ -42,7 +44,30 @@ const processBillController = {
     },
 
     ProcessMonthlyData: async (req, res) => {
-        return res.status(200).json({ status: true, success: "success" });
+        // console.log(req.body);
+        try {
+            let monthly_cost = await MonthlyCost.create({
+                total_meal: req.body.total_meal,
+                meal_rate: req.body.meal_rate,
+                total_meal_cost: req.body.total_cost,
+                createdBy: 1,
+                createdAt: '2023-10-14'
+            })
+            req.body.users.map(async u => {
+                await MonthlyCostDetails.create({
+                    monthly_cost_id: monthly_cost.id,
+                    user_id: u.id,
+                    expenditure_id: 1,
+                    expenditure_cost: 121.00,
+                    total_user_meal: u.total_meal,
+                    createdAt: '2023-10-24',
+                });
+            })
+        } catch (error) {
+            return res.status(400).json(error);
+        }
+        
+        return res.status(200).json(req.body);
     }
 
 }

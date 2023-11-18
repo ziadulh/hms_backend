@@ -2,10 +2,10 @@ const sequelize = require('../db')
 const { Model, DataTypes } = require('sequelize');
 const User = require('./User');
 
-class Meal extends Model { }
+class MonthlyCostDetails extends Model { }
 
 
-Meal.init({
+MonthlyCostDetails.init({
     id: {
         type: DataTypes.BIGINT(20),
         autoIncrement: true,
@@ -13,40 +13,40 @@ Meal.init({
         unique: true,
         allowNull: false
     },
-    type: {
-        type: DataTypes.ENUM('B', 'L', 'D'),
+    user_id: {
+        type: DataTypes.BIGINT,
         allowNull: false
     },
-    count: {
+    expenditure_id: {
+        type: DataTypes.BIGINT,
+        allowNull: false
+    },
+    expenditure_cost: {
         type: DataTypes.DOUBLE,
-        allowNull: true
-    },
-    year: {
-        type: DataTypes.INTEGER(4),
         allowNull: false
     },
-    month: {
-        type: DataTypes.STRING(2),
+    total_user_meal: {
+        type: DataTypes.DOUBLE,
         allowNull: false
     },
-    date: {
-        type: DataTypes.DATEONLY(),
-        allowNull: false,
+    monthly_cost_id: {
+        type: DataTypes.BIGINT,
+        allowNull: false
     },
-    createdBy: {
+    createdAt: {
         type: DataTypes.BIGINT(20),
         allowNull: false
     },
-    updatedBy: {
+    updatedAt: {
         type: DataTypes.DATE(6),
         timestamps: true,
         allowNull: true
     }
 }, {
     sequelize,
-    modelName: 'meal'
+    modelName: 'monthly_cost_details'
 });
 
 // Meal.belongsTo(User, { foreignKey: 'id' });
 
-module.exports = Meal;
+module.exports = MonthlyCostDetails;
